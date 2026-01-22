@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text and Web Mining - Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            z-index: 2000;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2196F3, #1976D2);
+            transition: width 0.3s ease;
+            width: 0;
+        }
+
+        .presentation-wrapper {
+            width: 100%;
+            height: 100vh;
+            padding-top: 4px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 40px 40px 20px 40px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slide-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Title Slide Specific Styles */
+        .slide-0 .slide-inner {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            border-radius: 12px;
+            padding: 60px 40px;
+        }
+
+        .slide-0 h1 {
+            font-size: 4rem;
+            color: #1976D2;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .slide-0 .subtitle {
+            font-size: 1.8rem;
+            color: #424242;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .slide-0 .info-text {
+            font-size: 1.3rem;
+            color: #616161;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Regular Slide Styles */
+        .slide:not(.slide-0) h2 {
+            font-size: 2.5rem;
+            color: #1976D2;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            border-bottom: 3px solid #2196F3;
+            padding-bottom: 0.5rem;
+        }
+
+        .slide:not(.slide-0) h3 {
+            font-size: 1.6rem;
+            color: #424242;
+            margin: 1.5rem 0 1rem 0;
+            font-weight: 600;
+        }
+
+        .slide:not(.slide-0) p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .slide:not(.slide-0) ul,
+        .slide:not(.slide-0) ol {
+            margin: 1rem 0 1rem 2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .slide:not(.slide-0) li {
+            margin-bottom: 0.8rem;
+            color: #333;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .keyword { color: #0033B3; font-weight: bold; }
+        .string { color: #067D17; }
+        .comment { color: #8C8C8C; font-style: italic; }
+        .function { color: #7A3E9D; }
+
+        .example-box {
+            background: #E3F2FD;
+            border-left: 4px solid #2196F3;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .note-box {
+            background: #FFF3E0;
+            border-left: 4px solid #FF9800;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        .workflow-step {
+            background: white;
+            border: 2px solid #2196F3;
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .workflow-step strong {
+            color: #1976D2;
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-visual {
+            background: #f5f5f5;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+
+        .arrow {
+            color: #2196F3;
+            font-weight: bold;
+            margin: 0 0.5rem;
+        }
+
+        .formula {
+            background: #f5f5f5;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            border: 1px solid #ddd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #2196F3;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: #1976D2;
+            margin-top: 0;
+            font-size: 1.4rem;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-top: 2px solid #e0e0e0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #1976D2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #e0e0e0;
+        }
+
+        button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            font-size: 1rem;
+            color: #616161;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 20px 20px 20px 20px;
+            }
+
+            .slide-0 h1 {
+                font-size: 2.5rem;
+            }
+
+            .slide-0 .subtitle {
+                font-size: 1.4rem;
+            }
+
+            .slide-0 .info-text {
+                font-size: 1.1rem;
+            }
+
+            .slide:not(.slide-0) h2 {
+                font-size: 1.8rem;
+            }
+
+            .slide:not(.slide-0) h3 {
+                font-size: 1.4rem;
+            }
+
+            .slide:not(.slide-0) p,
+            .slide:not(.slide-0) li {
+                font-size: 1rem;
+            }
+
+            .navigation {
+                padding: 0.8rem 1rem;
+                flex-wrap: wrap;
+                height: auto;
+            }
+
+            .nav-buttons {
+                order: 2;
+                width: 100%;
+                margin-top: 0.5rem;
+                justify-content: space-between;
+            }
+
+            button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                padding: 15px 15px 15px 15px;
+            }
+
+            .slide-0 h1 {
+                font-size: 2rem;
+            }
+
+            .slide-0 .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .slide-0 .info-text {
+                font-size: 1rem;
+            }
+
+            .slide:not(.slide-0) h2 {
+                font-size: 1.5rem;
+            }
+
+            .slide:not(.slide-0) h3 {
+                font-size: 1.2rem;
+            }
+
+            button {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="presentation-wrapper">
+        <div class="slide-container">
+            <!-- Slide 0: Title -->
+            <div class="slide slide-0 active">
+                <div class="slide-inner">
+                    <h1>Text and Web Mining</h1>
+                    <p class="subtitle">Sukrit Pant</p>
+                    <p class="info-text">Business Information System</p>
+                    <p class="info-text">LBEF – M.Sc.IT 7th Semester</p>
+                </div>
+            </div>
+
+            <!-- Slide 1: Text Mining -->
+            <div class="slide slide-1">
+                <div class="slide-inner">
+                    <h2>Text Mining</h2>
+                    <p><strong>Definition:</strong> Text mining is the process of extracting valuable information and knowledge from unstructured textual data. It transforms raw text into structured data using computational techniques from linguistics, statistics, and machine learning.</p>
+                    <h3>Key Points:</h3>
+                    <ul>
+                        <li>Analyzes patterns in textual data</li>
+                        <li>Extracts meaningful insights</li>
+                        <li>Uses NLP and statistical methods</li>
+                        <li>Applications in business intelligence</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 2: Core Steps -->
+            <div class="slide slide-2">
+                <div class="slide-inner">
+                    <h2>Core Steps in Text Mining</h2>
+                    <div class="workflow-step">
+                        <strong>1. Data Collection</strong>
+                        <p>Gathering text from various sources</p>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>2. Preprocessing</strong>
+                        <p>Cleaning and preparing text data</p>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>3. Text Representation</strong>
+                        <p>Converting text to numerical format</p>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>4. Analysis Techniques</strong>
+                        <p>Applying mining algorithms</p>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>5. Interpretation</strong>
+                        <p>Extracting actionable insights</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Data Collection -->
+            <div class="slide slide-3">
+                <div class="slide-inner">
+                    <h2>Data Collection</h2>
+                    <p>The first step involves gathering textual data from various sources</p>
+                    <h3>Sources:</h3>
+                    <ul>
+                        <li>Social media platforms</li>
+                        <li>Customer reviews and feedback</li>
+                        <li>News articles and blogs</li>
+                        <li>Emails and documents</li>
+                        <li>Web pages and forums</li>
+                    </ul>
+                    <div class="note-box">
+                        <strong>Note:</strong> Quality of data collection directly impacts analysis results
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Preprocessing -->
+            <div class="slide slide-4">
+                <div class="slide-inner">
+                    <h2>Preprocessing</h2>
+                    <p>Preprocessing prepares raw text for analysis by cleaning and standardizing it</p>
+                    <h3>Key Techniques:</h3>
+                    <ul>
+                        <li><strong>Tokenization</strong> - Breaking text into words/tokens</li>
+                        <li><strong>Lowercasing</strong> - Converting to lowercase</li>
+                        <li><strong>Removing punctuation and special characters</strong></li>
+                        <li><strong>Stop words removal</strong> - Eliminating common words</li>
+                        <li><strong>Stemming and Lemmatization</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 5: Stemming -->
+            <div class="slide slide-5">
+                <div class="slide-inner">
+                    <h2>Stemming</h2>
+                    <p><strong>Definition:</strong> Stemming reduces words to their root form by removing suffixes using rule-based algorithms</p>
+                    <div class="example-visual">
+                        running <span class="arrow">→</span> run<br>
+                        runs <span class="arrow">→</span> run<br>
+                        runner <span class="arrow">→</span> run<br>
+                        easily <span class="arrow">→</span> easili
+                    </div>
+                    <h3>Code Example:</h3>
+                    <div class="code-block"><code><span class="keyword">from</span> nltk.stem <span class="keyword">import</span> PorterStemmer
+stemmer = PorterStemmer()
+words = [<span class="string">"running"</span>, <span class="string">"runs"</span>, <span class="string">"runner"</span>]
+stemmed = [stemmer.stem(word) <span class="keyword">for</span> word <span class="keyword">in</span> words]
+<span class="function">print</span>(stemmed)</code></div>
+                    <div class="note-box">
+                        <strong>Note:</strong> Fast but may produce non-dictionary words
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Lemmatization -->
+            <div class="slide slide-6">
+                <div class="slide-inner">
+                    <h2>Lemmatization</h2>
+                    <p><strong>Definition:</strong> Lemmatization reduces words to their dictionary form (lemma) using morphological analysis</p>
+                    <div class="example-visual">
+                        running <span class="arrow">→</span> run<br>
+                        ran <span class="arrow">→</span> run<br>
+                        better <span class="arrow">→</span> good<br>
+                        are <span class="arrow">→</span> be
+                    </div>
+                    <h3>Code Example:</h3>
+                    <div class="code-block"><code><span class="keyword">from</span> nltk.stem <span class="keyword">import</span> WordNetLemmatizer
+lemmatizer = WordNetLemmatizer()
+words = [<span class="string">"running"</span>, <span class="string">"ran"</span>, <span class="string">"better"</span>]
+lemmas = [lemmatizer.lemmatize(word, pos=<span class="string">'v'</span>) <span class="keyword">for</span> word <span class="keyword">in</span> words]
+<span class="function">print</span>(lemmas)</code></div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Stemming vs Lemmatization -->
+            <div class="slide slide-7">
+                <div class="slide-inner">
+                    <h2>Stemming vs Lemmatization</h2>
+                    <table>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Stemming</th>
+                            <th>Lemmatization</th>
+                        </tr>
+                        <tr>
+                            <td>Speed</td>
+                            <td>Fast</td>
+                            <td>Slower</td>
+                        </tr>
+                        <tr>
+                            <td>Accuracy</td>
+                            <td>Lower</td>
+                            <td>Higher</td>
+                        </tr>
+                        <tr>
+                            <td>Output</td>
+                            <td>May not be real word</td>
+                            <td>Dictionary word</td>
+                        </tr>
+                        <tr>
+                            <td>Use Case</td>
+                            <td>Quick analysis</td>
+                            <td>Accurate analysis</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Slide 8: Text Representation -->
+            <div class="slide slide-8">
+                <div class="slide-inner">
+                    <h2>Text Representation</h2>
+                    <p>Converting text into numerical format that machine learning algorithms can process</p>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>Bag-of-Words (BoW)</h3>
+                            <p>Word frequency counts</p>
+                        </div>
+                        <div class="card">
+                            <h3>TF-IDF</h3>
+                            <p>Term importance weighting</p>
+                        </div>
+                        <div class="card">
+                            <h3>Word Embeddings</h3>
+                            <p>Dense vector representations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 9: Bag-of-Words -->
+            <div class="slide slide-9">
+                <div class="slide-inner">
+                    <h2>Bag-of-Words (BoW)</h2>
+                    <p><strong>Definition:</strong> BoW represents text as an unordered collection of words, counting their frequency</p>
+                    <div class="example-box">
+                        <strong>Example:</strong><br>
+                        Document 1: "Python is fun"<br>
+                        Document 2: "Learning Python is fun"<br><br>
+                        <strong>Vocabulary:</strong> [python, is, fun, learning]<br><br>
+                        <strong>BoW vectors:</strong><br>
+                        Doc 1: [1, 1, 1, 0]<br>
+                        Doc 2: [1, 1, 1, 1]
+                    </div>
+                    <h3>Characteristics:</h3>
+                    <ul>
+                        <li>Simple and fast</li>
+                        <li>Ignores word order</li>
+                        <li>Sparse representation</li>
+                        <li>Good for classification</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 10: TF-IDF -->
+            <div class="slide slide-10">
+                <div class="slide-inner">
+                    <h2>TF-IDF</h2>
+                    <p><strong>Definition:</strong> Term Frequency-Inverse Document Frequency weights word importance</p>
+                    <div class="formula">
+                        <strong>TF-IDF(t,d) = TF(t,d) × IDF(t)</strong><br><br>
+                        Where:<br>
+                        TF(t,d) = (Times term appears in document) / (Total terms in document)<br>
+                        IDF(t) = log(Total documents / Documents containing term)
+                    </div>
+                    <p><strong>Explanation:</strong> Higher score = more important to that specific document</p>
+                    <h3>Code Example:</h3>
+                    <div class="code-block"><code><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer
+docs = [<span class="string">"Python is fun"</span>, <span class="string">"Learning Python"</span>]
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(docs)</code></div>
+                </div>
+            </div>
+
+            <!-- Slide 11: Word Embeddings -->
+            <div class="slide slide-11">
+                <div class="slide-inner">
+                    <h2>Word Embeddings</h2>
+                    <p><strong>Definition:</strong> Word embeddings represent words as dense vectors in continuous space</p>
+                    <h3>Advantages:</h3>
+                    <ul>
+                        <li>Captures semantic meaning</li>
+                        <li>Lower dimensionality</li>
+                        <li>Words with similar meanings have similar vectors</li>
+                        <li>Enables arithmetic operations</li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Types:</strong> Word2Vec, GloVe, BERT
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 12: Word2Vec -->
+            <div class="slide slide-12">
+                <div class="slide-inner">
+                    <h2>Word2Vec</h2>
+                    <p><strong>Explanation:</strong> Word2Vec creates word embeddings by predicting context words or target words</p>
+                    <h3>Two Architectures:</h3>
+                    <ul>
+                        <li><strong>CBOW</strong> - Predicts target word from context</li>
+                        <li><strong>Skip-gram</strong> - Predicts context words from target word</li>
+                    </ul>
+                    <h3>Code Example:</h3>
+                    <div class="code-block"><code><span class="keyword">from</span> gensim.models <span class="keyword">import</span> Word2Vec
+sentences = [[<span class="string">'python'</span>, <span class="string">'is'</span>, <span class="string">'fun'</span>], 
+             [<span class="string">'learning'</span>, <span class="string">'python'</span>]]
+model = Word2Vec(sentences, min_count=<span class="string">1</span>)
+vector = model.wv[<span class="string">'python'</span>]
+similar = model.wv.most_similar(<span class="string">'python'</span>)</code></div>
+                </div>
+            </div>
+
+            <!-- Slide 13: GloVe -->
+            <div class="slide slide-13">
+                <div class="slide-inner">
+                    <h2>GloVe</h2>
+                    <p><strong>Explanation:</strong> GloVe (Global Vectors for Word Representation) creates embeddings by factorizing word co-occurrence matrices</p>
+                    <h3>Key Features:</h3>
+                    <ul>
+                        <li>Uses global word-word co-occurrence statistics</li>
+                        <li>Better performance on word analogy tasks</li>
+                        <li>Captures both local and global context</li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Advantage:</strong> Unlike Word2Vec, GloVe leverages global corpus statistics
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 14: BERT -->
+            <div class="slide slide-14">
+                <div class="slide-inner">
+                    <h2>BERT</h2>
+                    <p><strong>Explanation:</strong> BERT (Bidirectional Encoder Representations from Transformers) generates context-aware embeddings</p>
+                    <h3>Key Features:</h3>
+                    <ul>
+                        <li>Pre-trained on massive text corpora</li>
+                        <li>Bidirectional context understanding</li>
+                        <li>Different embeddings for same word in different contexts</li>
+                    </ul>
+                    <div class="example-box">
+                        <strong>Example:</strong><br>
+                        "The bank of the river" vs "Money in the bank"<br>
+                        → BERT generates different embeddings for "bank"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 15: Analysis Techniques -->
+            <div class="slide slide-15">
+                <div class="slide-inner">
+                    <h2>Analysis Techniques</h2>
+                    <ul>
+                        <li><strong>Classification</strong> - Categorizing documents</li>
+                        <li><strong>Clustering</strong> - Grouping similar documents</li>
+                        <li><strong>Sentiment Analysis</strong> - Detecting emotions/opinions</li>
+                        <li><strong>Topic Modeling</strong> - Discovering themes</li>
+                        <li><strong>Named Entity Recognition</strong> - Identifying entities</li>
+                        <li><strong>Information Extraction</strong> - Extracting structured data</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 16: Text Mining Methods -->
+            <div class="slide slide-16">
+                <div class="slide-inner">
+                    <h2>Text Mining Methods</h2>
+                    <div class="workflow-step">
+                        <strong>1. Term-based</strong>
+                        <p>Analyzes word-by-word (e.g., frequency analysis)</p>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>2. Phrase-based</strong>
+                        <p>Identifies multi-word terms (e.g., "machine learning")</p>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>3. Concept-based</strong>
+                        <p>Extracts abstract concepts (e.g., themes)</p>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>4. Pattern Taxonomy</strong>
+                        <p>Discovers repeating patterns (e.g., recurring ideas)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 17: Applications -->
+            <div class="slide slide-17">
+                <div class="slide-inner">
+                    <h2>Applications of Text Mining</h2>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>Sentiment Analysis</h3>
+                            <p>Customer opinion mining</p>
+                        </div>
+                        <div class="card">
+                            <h3>Spam Filtering</h3>
+                            <p>Email classification</p>
+                        </div>
+                        <div class="card">
+                            <h3>Document Classification</h3>
+                            <p>Organizing content</p>
+                        </div>
+                        <div class="card">
+                            <h3>Customer Feedback Analysis</h3>
+                            <p>Product improvement</p>
+                        </div>
+                        <div class="card">
+                            <h3>Medical Research</h3>
+                            <p>Analyzing research papers</p>
+                        </div>
+                        <div class="card">
+                            <h3>Social Media Monitoring</h3>
+                            <p>Brand reputation</p>
+                        </div>
+                        <div class="card">
+                            <h3>Market Research</h3>
+                            <p>Consumer insights</p>
+                        </div>
+                        <div class="card">
+                            <h3>Legal Document Analysis</h3>
+                            <p>Contract review</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 18: Web Mining -->
+            <div class="slide slide-18">
+                <div class="slide-inner">
+                    <h2>Web Mining</h2>
+                    <p><strong>Definition:</strong> Web mining applies data mining techniques to discover patterns from web data</p>
+                    <p><strong>Scope:</strong> Analyzing the massive, dynamic, and heterogeneous web to extract valuable information</p>
+                    <h3>Key Characteristics:</h3>
+                    <ul>
+                        <li>Deals with unstructured and semi-structured data</li>
+                        <li>Large-scale data processing</li>
+                        <li>Dynamic and evolving content</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 19: Types of Web Mining -->
+            <div class="slide slide-19">
+                <div class="slide-inner">
+                    <h2>Types of Web Mining</h2>
+                    <div class="workflow-step">
+                        <strong>1. Web Content Mining</strong>
+                        <p>Extracts information from web page content</p>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>2. Web Structure Mining</strong>
+                        <p>Analyzes hyperlink structure and relationships</p>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>3. Web Usage Mining</strong>
+                        <p>Analyzes user interaction patterns and clickstream</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 20: Web Content Mining -->
+            <div class="slide slide-20">
+                <div class="slide-inner">
+                    <h2>Web Content Mining</h2>
+                    <p><strong>Definition:</strong> Extracting useful information and knowledge from web page content</p>
+                    <h3>Techniques:</h3>
+                    <ul>
+                        <li>Text mining algorithms (TF-IDF, clustering)</li>
+                        <li>Topic modeling (LDA)</li>
+                        <li>Classification and categorization</li>
+                        <li>Pattern recognition</li>
+                    </ul>
+                    <h3>Applications:</h3>
+                    <ul>
+                        <li>Search engine indexing</li>
+                        <li>Information retrieval</li>
+                        <li>Content recommendation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 21: Web Structure Mining -->
+            <div class="slide slide-21">
+                <div class="slide-inner">
+                    <h2>Web Structure Mining</h2>
+                    <p><strong>Definition:</strong> Analyzing the link structure and relationships between web pages</p>
+                    <h3>Key Concepts:</h3>
+                    <ul>
+                        <li><strong>Inbound links</strong> - Links pointing to a page</li>
+                        <li><strong>Outbound links</strong> - Links from a page</li>
+                        <li><strong>Link analysis</strong> - PageRank algorithm</li>
+                        <li><strong>Anchor text analysis</strong></li>
+                    </ul>
+                    <h3>Applications:</h3>
+                    <ul>
+                        <li>Search engine ranking</li>
+                        <li>Website structure analysis</li>
+                        <li>Community detection</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 22: Web Usage Mining -->
+            <div class="slide slide-22">
+                <div class="slide-inner">
+                    <h2>Web Usage Mining</h2>
+                    <p><strong>Definition:</strong> Discovering user access patterns from web server logs and clickstream data</p>
+                    <h3>Data Sources:</h3>
+                    <ul>
+                        <li>Web server logs</li>
+                        <li>Browser logs</li>
+                        <li>User profiles</li>
+                        <li>Session data</li>
+                    </ul>
+                    <h3>Techniques:</h3>
+                    <ul>
+                        <li>Association rule mining</li>
+                        <li>Sequential pattern mining</li>
+                        <li>Clustering users and pages</li>
+                        <li>Classification</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 23: Web Usage Applications -->
+            <div class="slide slide-23">
+                <div class="slide-inner">
+                    <h2>Applications of Web Usage Mining</h2>
+                    <div class="workflow-step">
+                        <strong>1. Personalization</strong>
+                        <p>Customizing content for users</p>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>2. E-commerce</strong>
+                        <p>Customer behavior analysis</p>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>3. Website Optimization</strong>
+                        <p>Improving navigation</p>
+                    </div>
+                    <div class="workflow-step">
+                        <strong>4. Business Intelligence</strong>
+                        <p>Understanding customer journeys</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 24: Comparison -->
+            <div class="slide slide-24">
+                <div class="slide-inner">
+                    <h2>Text Mining vs Web Mining</h2>
+                    <table>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Text Mining</th>
+                            <th>Web Mining</th>
+                        </tr>
+                        <tr>
+                            <td>Definition</td>
+                            <td>Extract from text</td>
+                            <td>Extract from web data</td>
+                        </tr>
+                        <tr>
+                            <td>Data Type</td>
+                            <td>Text documents</td>
+                            <td>Web pages, links, logs</td>
+                        </tr>
+                        <tr>
+                            <td>Main Components</td>
+                            <td>Preprocessing, analysis</td>
+                            <td>Content, structure, usage</td>
+                        </tr>
+                        <tr>
+                            <td>Techniques</td>
+                            <td>NLP, classification</td>
+                            <td>Link analysis, log analysis</td>
+                        </tr>
+                        <tr>
+                            <td>Applications</td>
+                            <td>Sentiment, spam</td>
+                            <td>Recommender, site optimization</td>
+                        </tr>
+                        <tr>
+                            <td>Data Structure</td>
+                            <td>Unstructured text</td>
+                            <td>Structured/semi-structured</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Slide 25: Conclusion -->
+            <div class="slide slide-25">
+                <div class="slide-inner">
+                    <h2>Key Takeaways</h2>
+                    <h3>Summary:</h3>
+                    <ul>
+                        <li>Text mining transforms unstructured text into actionable insights</li>
+                        <li>Preprocessing is crucial for quality results</li>
+                        <li>Modern embeddings (Word2Vec, BERT) capture semantic meaning</li>
+                        <li>Web mining encompasses content, structure, and usage analysis</li>
+                        <li>Applications span from e-commerce to customer analytics</li>
+                    </ul>
+                    <h3>Future Trends:</h3>
+                    <ul>
+                        <li>Deep learning transformers</li>
+                        <li>Real-time analysis</li>
+                        <li>Multilingual processing</li>
+                        <li>Privacy-preserving mining</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button id="homeBtn" class="btn-secondary">Home</button>
+        <span class="slide-counter" id="slideCounter">1 / 25</span>
+        <div class="nav-buttons">
+            <button id="prevBtn" class="btn-secondary" disabled>Previous</button>
+            <button id="nextBtn" class="btn-primary">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 25;
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const homeBtn = document.getElementById('homeBtn');
+        const slideCounter = document.getElementById('slideCounter');
+        const progressFill = document.getElementById('progressFill');
+
+        function showSlide(n) {
+            if (n < 0) n = 0;
+            if (n >= totalSlides) n = totalSlides - 1;
+            
+            currentSlide = n;
+            
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            
+            prevBtn.disabled = (currentSlide === 0);
+            nextBtn.disabled = (currentSlide === totalSlides - 1);
+            
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressFill.style.width = progress + '%';
+            
+            const activeSlide = slides[currentSlide];
+            if (activeSlide) {
+                activeSlide.scrollTop = 0;
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function goHome() {
+            showSlide(0);
+        }
+
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        homeBtn.addEventListener('click', goHome);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'Home') {
+                goHome();
+            }
+        });
+
+        showSlide(0);
+    </script>
+</body>
+</html>

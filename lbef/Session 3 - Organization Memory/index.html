@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizational Memory in Business Intelligence Systems</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active" data-slide="1">
+            <div class="slide-content title-slide">
+                <div class="title-wrapper">
+                    <h1 class="main-title">Organizational Memory in Business Intelligence Systems</h1>
+                    <p class="subtitle">Contemporary Concepts and Best Practices for BI Students</p>
+                    <div class="author-info">
+                        <p class="author">Sukrit Pant</p>
+                        <p class="date">November 3, 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Table of Contents -->
+        <div class="slide" data-slide="2">
+            <div class="slide-content">
+                <h2 class="slide-title">Table of Contents</h2>
+                <div class="toc-grid">
+                    <div class="toc-column">
+                        <div class="toc-item"><span class="toc-number">01</span> What is Organizational Memory?</div>
+                        <div class="toc-item"><span class="toc-number">02</span> Why It Matters for BI</div>
+                        <div class="toc-item"><span class="toc-number">03</span> BIS Capabilities - The Foundation</div>
+                        <div class="toc-item"><span class="toc-number">04</span> Types of Data in Organizations</div>
+                        <div class="toc-item"><span class="toc-number">05</span> Three Stages of Organizational Memory</div>
+                        <div class="toc-item"><span class="toc-number">06</span> AI-Powered Organizational Memory</div>
+                    </div>
+                    <div class="toc-column">
+                        <div class="toc-item"><span class="toc-number">07</span> Metadata &amp; Data Lineage Management</div>
+                        <div class="toc-item"><span class="toc-number">08</span> Data Governance Framework</div>
+                        <div class="toc-item"><span class="toc-number">09</span> Knowledge Management Integration</div>
+                        <div class="toc-item"><span class="toc-number">10</span> Cloud-Based Systems</div>
+                        <div class="toc-item"><span class="toc-number">11</span> Challenges &amp; Best Practices</div>
+                        <div class="toc-item"><span class="toc-number">12</span> Future Trends &amp; Conclusion</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: What is Organizational Memory? -->
+        <div class="slide" data-slide="3">
+            <div class="slide-content">
+                <h2 class="slide-title">What is Organizational Memory?</h2>
+                <div class="definition-box">
+                    <p class="definition-text">"The collective repository of an organization's knowledge, experiences, and information that supports decision-making, problem-solving, and continuous improvement"</p>
+                </div>
+                <div class="content-grid-2">
+                    <div class="info-card">
+                        <h3>Why It Matters in BI Systems</h3>
+                        <ul>
+                            <li>Preserves critical business intelligence</li>
+                            <li>Enables consistent decision-making</li>
+                            <li>Reduces redundant analysis efforts</li>
+                            <li>Facilitates knowledge transfer</li>
+                        </ul>
+                    </div>
+                    <div class="hierarchy-diagram">
+                        <div class="hierarchy-level level-3">
+                            <div class="hierarchy-box">Knowledge</div>
+                        </div>
+                        <div class="hierarchy-arrow">↑</div>
+                        <div class="hierarchy-level level-2">
+                            <div class="hierarchy-box">Information</div>
+                        </div>
+                        <div class="hierarchy-arrow">↑</div>
+                        <div class="hierarchy-level level-1">
+                            <div class="hierarchy-box">Data</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Why Organizational Memory Matters for BI -->
+        <div class="slide" data-slide="4">
+            <div class="slide-content">
+                <h2 class="slide-title">Why Organizational Memory Matters for BI</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">📊</div>
+                        <h3>Data-Driven Decision Making</h3>
+                        <p>Empowers leaders with historical context and patterns to make informed strategic decisions based on evidence rather than intuition</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🧠</div>
+                        <h3>Prevents Corporate Amnesia</h3>
+                        <p>Safeguards institutional knowledge from being lost during staff turnover, organizational changes, or restructuring</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">🔄</div>
+                        <h3>Supports Business Continuity</h3>
+                        <p>Ensures critical processes and knowledge remain accessible and operational even during disruptions or transitions</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">⚡</div>
+                        <h3>Enhances Competitive Advantage</h3>
+                        <p>Leverages accumulated insights and best practices to outperform competitors and identify market opportunities</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">📚</div>
+                        <h3>Creates Institutional Knowledge Base</h3>
+                        <p>Builds a comprehensive repository of expertise, lessons learned, and organizational wisdom for continuous improvement</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: BIS Capabilities - The Foundation -->
+        <div class="slide" data-slide="5">
+            <div class="slide-content">
+                <h2 class="slide-title">BIS Capabilities - The Foundation</h2>
+                <div class="capabilities-grid">
+                    <div class="capability-card">
+                        <div class="capability-icon">🔗</div>
+                        <h3>Data Integration</h3>
+                        <p>Combining data from different sources into a unified view</p>
+                        <div class="capability-details">
+                            <span>ETL Processes</span>
+                            <span>Data Warehousing</span>
+                            <span>API Integration</span>
+                        </div>
+                    </div>
+                    <div class="capability-card highlight">
+                        <div class="capability-icon">💾</div>
+                        <h3>Organizational Memory</h3>
+                        <p>The accumulated body of data, information, and knowledge</p>
+                        <div class="capability-details">
+                            <span>Historical Data</span>
+                            <span>Best Practices</span>
+                            <span>Lessons Learned</span>
+                        </div>
+                    </div>
+                    <div class="capability-card">
+                        <div class="capability-icon">⛏️</div>
+                        <h3>Data Mining</h3>
+                        <p>Tools for manipulating, mining, and analyzing data</p>
+                        <div class="capability-details">
+                            <span>Pattern Recognition</span>
+                            <span>Predictive Analytics</span>
+                            <span>Statistical Analysis</span>
+                        </div>
+                    </div>
+                    <div class="capability-card">
+                        <div class="capability-icon">📊</div>
+                        <h3>Presentation</h3>
+                        <p>Interpreting in visual terms or putting into visible form</p>
+                        <div class="capability-details">
+                            <span>Dashboards</span>
+                            <span>Reports</span>
+                            <span>Visualizations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Types of Data in Organizations -->
+        <div class="slide" data-slide="6">
+            <div class="slide-content">
+                <h2 class="slide-title">Types of Data in Organizations</h2>
+                <div class="data-types-container">
+                    <div class="data-type-card">
+                        <div class="data-type-header" style="background: var(--color-bg-1);">
+                            <h3>Organizational Structure Data</h3>
+                        </div>
+                        <div class="data-type-body">
+                            <p class="data-type-description">Information about the organization's hierarchy, departments, roles, and reporting relationships</p>
+                            <ul>
+                                <li>Organizational charts</li>
+                                <li>Department structures</li>
+                                <li>Role definitions</li>
+                                <li>Reporting hierarchies</li>
+                                <li>Team compositions</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="data-type-card">
+                        <div class="data-type-header" style="background: var(--color-bg-3);">
+                            <h3>Master Data</h3>
+                        </div>
+                        <div class="data-type-body">
+                            <p class="data-type-description">Core business entities that are shared across systems and used consistently throughout the organization</p>
+                            <ul>
+                                <li>Customer information</li>
+                                <li>Product catalogs</li>
+                                <li>Employee records</li>
+                                <li>Supplier details</li>
+                                <li>Asset inventories</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="data-type-card">
+                        <div class="data-type-header" style="background: var(--color-bg-6);">
+                            <h3>Transactional Data</h3>
+                        </div>
+                        <div class="data-type-body">
+                            <p class="data-type-description">Records of business events and activities that occur during normal operations</p>
+                            <ul>
+                                <li>Sales transactions</li>
+                                <li>Purchase orders</li>
+                                <li>Payment records</li>
+                                <li>Service interactions</li>
+                                <li>Log files and events</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Three Stages of Organizational Memory -->
+        <div class="slide" data-slide="7">
+            <div class="slide-content">
+                <h2 class="slide-title">Three Stages of Organizational Memory</h2>
+                <div class="stages-timeline">
+                    <div class="stage-card">
+                        <div class="stage-number">1</div>
+                        <h3 class="stage-title">ACQUISITION</h3>
+                        <div class="stage-content">
+                            <ul>
+                                <li>Capture knowledge from internal and external sources</li>
+                                <li>Convert tacit knowledge into documented knowledge</li>
+                                <li>Collect data from operational systems</li>
+                                <li>Integrate multiple data streams</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="stage-arrow">→</div>
+                    <div class="stage-card">
+                        <div class="stage-number">2</div>
+                        <h3 class="stage-title">RETENTION</h3>
+                        <div class="stage-content">
+                            <ul>
+                                <li>Store and preserve knowledge over time</li>
+                                <li>Use multiple repositories (databases, culture, routines, people)</li>
+                                <li>Prevent corporate amnesia</li>
+                                <li>Ensure knowledge survives staff turnover</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="stage-arrow">→</div>
+                    <div class="stage-card">
+                        <div class="stage-number">3</div>
+                        <h3 class="stage-title">RETRIEVAL</h3>
+                        <div class="stage-content">
+                            <ul>
+                                <li>Access stored knowledge when needed</li>
+                                <li>Make information actionable</li>
+                                <li>Support decision-making processes</li>
+                                <li>Enable pattern recognition and learning</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: AI-Powered Organizational Memory -->
+        <div class="slide" data-slide="8">
+            <div class="slide-content">
+                <h2 class="slide-title">Contemporary Concept: AI-Powered Organizational Memory (2024-2025)</h2>
+                <div class="contemporary-intro">
+                    <div class="stat-highlight">
+                        <div class="stat-value">38%</div>
+                        <div class="stat-label">of KM teams use AI to recommend content</div>
+                    </div>
+                    <div class="stat-highlight">
+                        <div class="stat-value">47.2%</div>
+                        <div class="stat-label">AI-driven KM market CAGR</div>
+                    </div>
+                    <div class="stat-highlight">
+                        <div class="stat-value">$3.5T</div>
+                        <div class="stat-label">Projected KM market by 2034</div>
+                    </div>
+                </div>
+                <div class="ai-features-grid">
+                    <div class="feature-card">
+                        <h4>🤖 Machine Learning Applications</h4>
+                        <p>Automated pattern recognition, anomaly detection, and predictive insights from historical organizational data</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔍 Smart Knowledge Discovery</h4>
+                        <p>AI-powered semantic search with contextual understanding to find relevant information across disparate systems</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📝 NLP for Unstructured Data</h4>
+                        <p>Natural Language Processing extracts insights from documents, emails, and communications for comprehensive memory</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>👤 Personalized Knowledge Delivery</h4>
+                        <p>Role-based, context-aware knowledge recommendations tailored to individual user needs and responsibilities</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🏷️ Automated Metadata Management</h4>
+                        <p>AI automatically tags, categorizes, and maintains metadata ensuring data discoverability and lineage</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Metadata & Data Lineage -->
+        <div class="slide" data-slide="9">
+            <div class="slide-content">
+                <h2 class="slide-title">Contemporary Concept: Metadata &amp; Data Lineage Management</h2>
+                <div class="metadata-intro">
+                    <div class="definition-highlight">
+                        <strong>Metadata:</strong> Data about data - descriptive information that provides context, meaning, and structure to organizational data
+                    </div>
+                    <div class="definition-highlight">
+                        <strong>Data Lineage:</strong> The complete journey of data from its origin through transformations to its final destination
+                    </div>
+                </div>
+                <div class="content-split">
+                    <div class="metadata-types">
+                        <h3>Types of Metadata</h3>
+                        <div class="metadata-card">
+                            <h4>Technical Metadata</h4>
+                            <ul>
+                                <li>Data types and formats</li>
+                                <li>Database schemas</li>
+                                <li>Field lengths and constraints</li>
+                                <li>System-level properties</li>
+                            </ul>
+                        </div>
+                        <div class="metadata-card">
+                            <h4>Business Metadata</h4>
+                            <ul>
+                                <li>Business definitions</li>
+                                <li>Data ownership</li>
+                                <li>Business rules</li>
+                                <li>Glossary terms</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="lineage-benefits">
+                        <h3>Benefits for Organizational Memory</h3>
+                        <div class="benefit-list">
+                            <div class="benefit-item">✓ Ensures data trustworthiness and quality</div>
+                            <div class="benefit-item">✓ Enables impact analysis for changes</div>
+                            <div class="benefit-item">✓ Supports compliance and auditing</div>
+                            <div class="benefit-item">✓ Facilitates root cause analysis</div>
+                            <div class="benefit-item">✓ Improves data discovery and understanding</div>
+                            <div class="benefit-item">✓ Documents transformation logic</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Data Governance Framework -->
+        <div class="slide" data-slide="10">
+            <div class="slide-content">
+                <h2 class="slide-title">Contemporary Concept: Data Governance Framework</h2>
+                <p class="slide-intro">71% of organizations have implemented data governance programs to manage organizational memory effectively</p>
+                <div class="governance-grid">
+                    <div class="governance-card">
+                        <div class="governance-icon">✓</div>
+                        <h4>Data Quality Standards</h4>
+                        <p>Establish accuracy, completeness, consistency, and timeliness requirements for all organizational data</p>
+                    </div>
+                    <div class="governance-card">
+                        <div class="governance-icon">👥</div>
+                        <h4>Data Ownership &amp; Accountability</h4>
+                        <p>Define clear roles and responsibilities for data stewardship and decision-making authority</p>
+                    </div>
+                    <div class="governance-card">
+                        <div class="governance-icon">🔒</div>
+                        <h4>Security &amp; Compliance</h4>
+                        <p>Implement controls to protect sensitive data and ensure regulatory compliance (GDPR, CCPA, etc.)</p>
+                    </div>
+                    <div class="governance-card">
+                        <div class="governance-icon">🔑</div>
+                        <h4>Data Access Controls</h4>
+                        <p>Manage permissions and authentication to ensure appropriate access to organizational memory</p>
+                    </div>
+                    <div class="governance-card">
+                        <div class="governance-icon">🏷️</div>
+                        <h4>Metadata Management</h4>
+                        <p>Maintain comprehensive data catalogs and documentation for discoverability and context</p>
+                    </div>
+                    <div class="governance-card">
+                        <div class="governance-icon">📊</div>
+                        <h4>Continuous Auditing &amp; Monitoring</h4>
+                        <p>Track data usage, quality metrics, and compliance status through ongoing monitoring programs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Knowledge Management Integration -->
+        <div class="slide" data-slide="11">
+            <div class="slide-content">
+                <h2 class="slide-title">Knowledge Management Integration</h2>
+                <div class="km-container">
+                    <div class="km-main-card">
+                        <h3>Integrating KM with Organizational Memory</h3>
+                        <p>Effective organizational memory requires seamless integration of knowledge management practices with BI systems</p>
+                    </div>
+                    <div class="km-grid">
+                        <div class="km-item">
+                            <div class="km-item-icon">💬</div>
+                            <h4>Collaboration Tools Integration</h4>
+                            <p>Connect Slack, Teams, and other platforms to capture informal knowledge and conversations</p>
+                        </div>
+                        <div class="km-item">
+                            <div class="km-item-icon">📦</div>
+                            <h4>Centralized Knowledge Repositories</h4>
+                            <p>Single source of truth for documentation, best practices, and institutional knowledge</p>
+                        </div>
+                        <div class="km-item">
+                            <div class="km-item-icon">🤝</div>
+                            <h4>Knowledge Sharing Practices</h4>
+                            <p>Encourage documentation, peer learning, and cross-functional knowledge transfer</p>
+                        </div>
+                        <div class="km-item">
+                            <div class="km-item-icon">📈</div>
+                            <h4>Continuous Learning Culture</h4>
+                            <p>Foster an environment where learning from past experiences is valued and rewarded</p>
+                        </div>
+                        <div class="km-item">
+                            <div class="km-item-icon">🎯</div>
+                            <h4>Role-Based Access</h4>
+                            <p>Personalized views of organizational memory based on job function and security clearance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Cloud-Based Organizational Memory Systems -->
+        <div class="slide" data-slide="12">
+            <div class="slide-content">
+                <h2 class="slide-title">Cloud-Based Organizational Memory Systems</h2>
+                <div class="cloud-benefits">
+                    <div class="cloud-hero">
+                        <h3>☁️ The Cloud Advantage for Organizational Memory</h3>
+                        <p>Modern cloud infrastructure transforms how organizations capture, store, and access institutional knowledge</p>
+                    </div>
+                    <div class="cloud-grid">
+                        <div class="cloud-card">
+                            <h4>📈 Scalability</h4>
+                            <p>Elastic storage and computing resources that grow with organizational needs without infrastructure constraints</p>
+                        </div>
+                        <div class="cloud-card">
+                            <h4>🌐 Global Accessibility</h4>
+                            <p>Access organizational memory anytime, anywhere, enabling distributed teams and remote work scenarios</p>
+                        </div>
+                        <div class="cloud-card">
+                            <h4>⚡ Real-Time Updates</h4>
+                            <p>Instantaneous knowledge synchronization across all users and systems, ensuring everyone has current information</p>
+                        </div>
+                        <div class="cloud-card">
+                            <h4>🔄 Distributed Yet Centralized</h4>
+                            <p>Single logical repository accessible from multiple locations, eliminating knowledge silos</p>
+                        </div>
+                        <div class="cloud-card">
+                            <h4>🛡️ Disaster Recovery</h4>
+                            <p>Automated backups and redundancy ensure organizational memory survives disasters and system failures</p>
+                        </div>
+                        <div class="cloud-card">
+                            <h4>💰 Cost Efficiency</h4>
+                            <p>Pay-as-you-go models reduce capital expenditure and eliminate maintenance overhead</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Challenges -->
+        <div class="slide" data-slide="13">
+            <div class="slide-content">
+                <h2 class="slide-title">Challenges in Organizational Memory Management</h2>
+                <div class="challenges-grid">
+                    <div class="challenge-card">
+                        <div class="challenge-number">01</div>
+                        <h4>Data Quality &amp; Consistency</h4>
+                        <p>Maintaining accurate, complete, and consistent data across multiple systems and over time</p>
+                    </div>
+                    <div class="challenge-card">
+                        <div class="challenge-number">02</div>
+                        <h4>Knowledge Silos</h4>
+                        <p>Breaking down departmental barriers and integrating isolated pockets of information</p>
+                    </div>
+                    <div class="challenge-card">
+                        <div class="challenge-number">03</div>
+                        <h4>Rapid Staff Turnover</h4>
+                        <p>Capturing tacit knowledge before employees leave and onboarding new staff effectively</p>
+                    </div>
+                    <div class="challenge-card">
+                        <div class="challenge-number">04</div>
+                        <h4>Technology Fragmentation</h4>
+                        <p>Managing data across diverse platforms, legacy systems, and modern cloud solutions</p>
+                    </div>
+                    <div class="challenge-card">
+                        <div class="challenge-number">05</div>
+                        <h4>Tacit vs Explicit Knowledge</h4>
+                        <p>Converting undocumented expertise and intuition into formalized, accessible knowledge</p>
+                    </div>
+                    <div class="challenge-card">
+                        <div class="challenge-number">06</div>
+                        <h4>Data Privacy &amp; Security</h4>
+                        <p>Balancing accessibility with protection of sensitive information and regulatory compliance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Best Practices -->
+        <div class="slide" data-slide="14">
+            <div class="slide-content">
+                <h2 class="slide-title">Best Practices for BI Students</h2>
+                <div class="practices-container">
+                    <div class="practice-item">
+                        <div class="practice-icon">📝</div>
+                        <div class="practice-content">
+                            <h4>Document All Processes and Procedures</h4>
+                            <p>Create comprehensive documentation for every BI process, including data flows, transformations, and business logic</p>
+                        </div>
+                    </div>
+                    <div class="practice-item">
+                        <div class="practice-icon">🔄</div>
+                        <div class="practice-content">
+                            <h4>Implement Version Control</h4>
+                            <p>Track changes to reports, queries, and data models using Git or similar systems for audit trails and rollback capability</p>
+                        </div>
+                    </div>
+                    <div class="practice-item">
+                        <div class="practice-icon">📚</div>
+                        <div class="practice-content">
+                            <h4>Create Comprehensive Data Dictionaries</h4>
+                            <p>Maintain detailed definitions of all data elements, their sources, transformations, and business meanings</p>
+                        </div>
+                    </div>
+                    <div class="practice-item">
+                        <div class="practice-icon">🏗️</div>
+                        <div class="practice-content">
+                            <h4>Build Strong Metadata Frameworks</h4>
+                            <p>Establish consistent metadata standards for documentation, classification, and data lineage tracking</p>
+                        </div>
+                    </div>
+                    <div class="practice-item">
+                        <div class="practice-icon">🎓</div>
+                        <div class="practice-content">
+                            <h4>Foster Data Literacy Culture</h4>
+                            <p>Promote understanding of data concepts, quality principles, and analytical thinking across the organization</p>
+                        </div>
+                    </div>
+                    <div class="practice-item">
+                        <div class="practice-icon">🤖</div>
+                        <div class="practice-content">
+                            <h4>Use Automation Where Possible</h4>
+                            <p>Automate repetitive tasks like data quality checks, metadata tagging, and documentation updates</p>
+                        </div>
+                    </div>
+                    <div class="practice-item">
+                        <div class="practice-icon">👥</div>
+                        <div class="practice-content">
+                            <h4>Promote Cross-Functional Collaboration</h4>
+                            <p>Encourage collaboration between IT, business units, and analytics teams to capture diverse perspectives</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Future Trends -->
+        <div class="slide" data-slide="15">
+            <div class="slide-content">
+                <h2 class="slide-title">Future Trends &amp; Opportunities (2025 onwards)</h2>
+                <div class="future-grid">
+                    <div class="future-card">
+                        <div class="future-icon">🔍</div>
+                        <h3>AI-Driven Semantic Search</h3>
+                        <p>Advanced search that understands intent, context, and relationships between concepts for intuitive knowledge discovery</p>
+                        <div class="future-tag">Near-term (2025-2026)</div>
+                    </div>
+                    <div class="future-card">
+                        <div class="future-icon">🕸️</div>
+                        <h3>Knowledge Graphs</h3>
+                        <p>Interconnected data networks that represent relationships between entities, enabling complex reasoning and inference</p>
+                        <div class="future-tag">Near-term (2025-2027)</div>
+                    </div>
+                    <div class="future-card">
+                        <div class="future-icon">💡</div>
+                        <h3>Automated Insight Generation</h3>
+                        <p>AI systems that proactively identify patterns, anomalies, and opportunities without explicit queries</p>
+                        <div class="future-tag">Mid-term (2026-2028)</div>
+                    </div>
+                    <div class="future-card">
+                        <div class="future-icon">⚡</div>
+                        <h3>Real-Time Organizational Intelligence</h3>
+                        <p>Continuous monitoring and analysis of organizational activities with instant knowledge capture and sharing</p>
+                        <div class="future-tag">Mid-term (2027-2029)</div>
+                    </div>
+                    <div class="future-card">
+                        <div class="future-icon">⚖️</div>
+                        <h3>Ethical AI in Memory Systems</h3>
+                        <p>Frameworks ensuring fairness, transparency, and privacy in AI-powered organizational memory applications</p>
+                        <div class="future-tag">Ongoing Priority</div>
+                    </div>
+                    <div class="future-card">
+                        <div class="future-icon">🎯</div>
+                        <h3>Self-Service Analytics Platforms</h3>
+                        <p>Democratized access to organizational memory with intuitive interfaces requiring minimal technical expertise</p>
+                        <div class="future-tag">Near-term (2025-2026)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Key Takeaways -->
+        <div class="slide" data-slide="16">
+            <div class="slide-content">
+                <h2 class="slide-title">Key Takeaways</h2>
+                <div class="takeaways-container">
+                    <div class="takeaway-box">
+                        <div class="takeaway-number">1</div>
+                        <p><strong>Organizational memory is foundational to BI success</strong> - it enables data-driven decisions and prevents knowledge loss</p>
+                    </div>
+                    <div class="takeaway-box">
+                        <div class="takeaway-number">2</div>
+                        <p><strong>Three critical stages</strong> - Acquisition, Retention, and Retrieval must all function effectively for organizational memory to deliver value</p>
+                    </div>
+                    <div class="takeaway-box">
+                        <div class="takeaway-number">3</div>
+                        <p><strong>AI is transforming knowledge management</strong> - Machine learning, NLP, and automation are revolutionizing how organizations capture and use memory</p>
+                    </div>
+                    <div class="takeaway-box">
+                        <div class="takeaway-number">4</div>
+                        <p><strong>Metadata and lineage are essential</strong> - Understanding data context and provenance ensures trustworthy organizational memory</p>
+                    </div>
+                    <div class="takeaway-box">
+                        <div class="takeaway-number">5</div>
+                        <p><strong>Governance frameworks provide structure</strong> - Clear policies, ownership, and quality standards make organizational memory reliable and secure</p>
+                    </div>
+                    <div class="takeaway-box">
+                        <div class="takeaway-number">6</div>
+                        <p><strong>Cloud enables modern capabilities</strong> - Scalability, accessibility, and real-time collaboration are key advantages of cloud-based systems</p>
+                    </div>
+                    <div class="takeaway-box">
+                        <div class="takeaway-number">7</div>
+                        <p><strong>Documentation and best practices matter</strong> - As BI professionals, cultivating strong documentation habits is crucial for organizational success</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Conclusion -->
+        <div class="slide" data-slide="17">
+            <div class="slide-content conclusion-slide">
+                <h2 class="slide-title">Conclusion &amp; Discussion</h2>
+                <div class="conclusion-content">
+                    <div class="conclusion-summary">
+                        <h3>Organizational Memory: A Critical BI Competency</h3>
+                        <p>As we've explored, organizational memory is not just about storing data—it's about creating a living, intelligent system that captures, preserves, and delivers knowledge when it's needed most.</p>
+                        <p>For Business Intelligence professionals, mastering organizational memory concepts means:</p>
+                        <ul>
+                            <li>Building systems that support better decisions</li>
+                            <li>Preserving institutional knowledge across generations</li>
+                            <li>Leveraging contemporary technologies like AI and cloud</li>
+                            <li>Implementing governance that balances access with security</li>
+                        </ul>
+                    </div>
+                    <div class="call-to-action">
+                        <h3>Your Next Steps</h3>
+                        <div class="action-items">
+                            <div class="action-item">📖 Study metadata management and data lineage tools</div>
+                            <div class="action-item">🔬 Experiment with AI-powered knowledge management platforms</div>
+                            <div class="action-item">🏗️ Practice building data dictionaries and documentation</div>
+                            <div class="action-item">🤝 Engage with data governance frameworks in real projects</div>
+                        </div>
+                    </div>
+                    <div class="discussion-prompt">
+                        <h3>Let's Discuss</h3>
+                        <p class="discussion-text">Questions? Ideas? Let's explore how organizational memory concepts apply to your experiences and future career in Business Intelligence.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="controls">
+        <button id="prevBtn" class="nav-btn" aria-label="Previous slide">‹</button>
+        <div class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">17</span>
+        </div>
+        <button id="nextBtn" class="nav-btn" aria-label="Next slide">›</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

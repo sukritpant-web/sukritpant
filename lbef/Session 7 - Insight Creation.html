@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight Creation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-bg-dark: #0f172a;
+            --color-bg-dark-elevated: #020617;
+            --color-bg-dark-surface: #1e293b;
+            --color-text-dark: #f1f5f9;
+            --color-text-dark-secondary: #cbd5e1;
+            --color-accent-dark: #38bdf8;
+            
+            --color-bg-light: #ffffff;
+            --color-bg-light-elevated: #f8fafc;
+            --color-bg-light-surface: #f1f5f9;
+            --color-text-light: #0f172a;
+            --color-text-light-secondary: #475569;
+            --color-accent-light: #0284c7;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        body.light-mode {
+            background-color: var(--color-bg-light);
+            color: var(--color-text-light);
+        }
+
+        body.dark-mode {
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-dark);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: none;
+            border: 2px solid;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .theme-toggle {
+            border-color: var(--color-accent-light);
+            color: var(--color-accent-light);
+        }
+
+        body.dark-mode .theme-toggle {
+            border-color: var(--color-accent-dark);
+            color: var(--color-accent-dark);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .slides-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .slide {
+            width: 100%;
+            max-width: 1000px;
+            height: 100vh;
+            max-height: 600px;
+            aspect-ratio: 16 / 9;
+            border-radius: 12px;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        body.light-mode .slide {
+            background-color: var(--color-bg-light);
+            color: var(--color-text-light);
+            box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1);
+        }
+
+        body.dark-mode .slide {
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-dark);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide.title-slide {
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .slide h1 {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .slide h2 {
+            font-size: clamp(1.75rem, 6vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .slide h3 {
+            font-size: clamp(1.25rem, 4vw, 1.75rem);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .slide p {
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .slide ul {
+            font-size: clamp(0.9rem, 2.3vw, 1rem);
+            line-height: 1.8;
+            margin-left: 2rem;
+        }
+
+        .slide li {
+            margin-bottom: 12px;
+            list-style-position: outside;
+        }
+
+        .accent-text {
+            font-weight: 600;
+        }
+
+        body.light-mode .accent-text {
+            color: var(--color-accent-light);
+        }
+
+        body.dark-mode .accent-text {
+            color: var(--color-accent-dark);
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .author {
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            opacity: 0.6;
+            margin-top: 40px;
+            font-style: italic;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        body.light-mode .card {
+            background-color: var(--color-bg-light-surface);
+            border-left: 4px solid var(--color-accent-light);
+        }
+
+        body.dark-mode .card {
+            background-color: var(--color-bg-dark-surface);
+            border-left: 4px solid var(--color-accent-dark);
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 999;
+        }
+
+        .slides-container:hover .navigation {
+            opacity: 1;
+        }
+
+        .nav-btn {
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        body.light-mode .nav-btn {
+            background-color: var(--color-accent-light);
+            color: white;
+        }
+
+        body.dark-mode .nav-btn {
+            background-color: var(--color-accent-dark);
+            color: #0f172a;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 999;
+            font-weight: 600;
+        }
+
+        .slides-container:hover .slide-counter {
+            opacity: 1;
+        }
+
+        body.light-mode .slide-counter {
+            color: var(--color-accent-light);
+        }
+
+        body.dark-mode .slide-counter {
+            color: var(--color-accent-dark);
+        }
+
+        .example-box {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+        }
+
+        body.light-mode .example-box {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--color-accent-light);
+            color: #0c4a6e;
+        }
+
+        body.dark-mode .example-box {
+            background-color: rgba(56, 189, 248, 0.1);
+            border-left: 4px solid var(--color-accent-dark);
+            color: #bae6fd;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        body.light-mode .flow-step {
+            background-color: var(--color-bg-light-surface);
+            color: var(--color-text-light);
+        }
+
+        body.dark-mode .flow-step {
+            background-color: var(--color-bg-dark-surface);
+            color: var(--color-text-dark);
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        body.light-mode .arrow {
+            color: var(--color-accent-light);
+        }
+
+        body.dark-mode .arrow {
+            color: var(--color-accent-dark);
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid;
+        }
+
+        body.light-mode th, body.light-mode td {
+            border-bottom-color: #e2e8f0;
+        }
+
+        body.dark-mode th, body.dark-mode td {
+            border-bottom-color: #334155;
+        }
+
+        body.light-mode th {
+            background-color: var(--color-bg-light-surface);
+            color: var(--color-accent-light);
+            font-weight: 700;
+        }
+
+        body.dark-mode th {
+            background-color: var(--color-bg-dark-surface);
+            color: var(--color-accent-dark);
+            font-weight: 700;
+        }
+
+        body.light-mode tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        body.dark-mode tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .highlight-box {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        body.light-mode .highlight-box {
+            background-color: #f0fdf4;
+            color: #166534;
+            border-left: 4px solid #22c55e;
+        }
+
+        body.dark-mode .highlight-box {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: #bbf7d0;
+            border-left: 4px solid #22c55e;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 25px;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .flow-diagram {
+                flex-direction: column;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+                margin: 5px 0;
+            }
+
+            table {
+                font-size: 0.75rem;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                padding: 30px 15px;
+                max-height: 100vh;
+            }
+
+            .slide h1 {
+                font-size: 1.75rem;
+            }
+
+            .slide h2 {
+                font-size: 1.4rem;
+            }
+
+            .slide p {
+                font-size: 0.9rem;
+            }
+
+            .nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .theme-toggle {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+
+    <div class="slides-container">
+        <!-- Slide 1: Title Slide -->
+        <section class="slide title-slide active">
+            <div>
+                <h1>Insight Creation</h1>
+                <p class="subtitle">Transforming Data into Actionable Intelligence</p>
+            </div>
+            <p class="author">By Sukrit Pant</p>
+        </section>
+
+        <!-- Slide 2: Overview -->
+        <section class="slide">
+            <h2>From Data to Insights</h2>
+            <div class="flow-diagram">
+                <div class="flow-step">Data</div>
+                <div class="arrow">→</div>
+                <div class="flow-step">Processing</div>
+                <div class="arrow">→</div>
+                <div class="flow-step">Analysis</div>
+                <div class="arrow">→</div>
+                <div class="flow-step">Insights</div>
+                <div class="arrow">→</div>
+                <div class="flow-step">Action</div>
+            </div>
+            <p>The journey from raw data to meaningful insights requires systematic processing, analysis, and interpretation. Understanding each stage is crucial for generating valuable intelligence that drives business decisions.</p>
+        </section>
+
+        <!-- Slide 3: Data Collection and Integration -->
+        <section class="slide">
+            <h2>Data Collection & Integration</h2>
+            <ul>
+                <li><span class="accent-text">Structured Data:</span> Databases, spreadsheets, and formatted records</li>
+                <li><span class="accent-text">Unstructured Data:</span> Text, images, audio, and video content</li>
+                <li><span class="accent-text">Real-time Streaming:</span> Live data feeds from IoT devices and sensors</li>
+                <li><span class="accent-text">Data Integration:</span> Combining data from multiple sources into a unified view</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> Netflix combines user viewing history, search behavior, device data, and time-of-day patterns to create a unified customer profile.
+            </div>
+        </section>
+
+        <!-- Slide 4: Data Preparation -->
+        <section class="slide">
+            <h2>Data Preparation</h2>
+            <ul>
+                <li><span class="accent-text">Cleaning:</span> Removing duplicates, handling missing values, and correcting errors</li>
+                <li><span class="accent-text">Transformation:</span> Converting data into appropriate formats and structures</li>
+                <li><span class="accent-text">Normalization:</span> Standardizing data across different scales and units</li>
+                <li><span class="accent-text">Validation:</span> Ensuring data quality and consistency</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> An e-commerce company cleans sales data by removing incomplete transactions, standardizing date formats, and handling currency conversions before analysis.
+            </div>
+        </section>
+
+        <!-- Slide 5: Data Analysis -->
+        <section class="slide">
+            <h2>Data Analysis</h2>
+            <ul>
+                <li><span class="accent-text">Exploratory Analysis:</span> Discovering patterns, distributions, and relationships</li>
+                <li><span class="accent-text">Descriptive Analysis:</span> Summarizing key characteristics using statistics</li>
+                <li><span class="accent-text">Diagnostic Analysis:</span> Understanding why something happened</li>
+                <li><span class="accent-text">Comparative Analysis:</span> Evaluating performance across segments or time periods</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> Spotify analyzes listener behavior to identify genre preferences, peak listening times, and artist correlations to personalize playlists.
+            </div>
+        </section>
+
+        <!-- Slide 6: Visualization and Reporting -->
+        <section class="slide">
+            <h2>Visualization & Reporting</h2>
+            <ul>
+                <li><span class="accent-text">Charts and Graphs:</span> Bar, line, scatter plots for trend visualization</li>
+                <li><span class="accent-text">Dashboards:</span> Real-time monitoring and KPI tracking</li>
+                <li><span class="accent-text">Heat Maps:</span> Density and concentration visualization</li>
+                <li><span class="accent-text">Storytelling:</span> Narratives that communicate findings effectively</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> Google Analytics presents web traffic data through interactive dashboards showing bounce rates, user flows, and conversion funnels.
+            </div>
+        </section>
+
+        <!-- Slide 7: Action and Decision-Making -->
+        <section class="slide">
+            <h2>Action & Decision-Making</h2>
+            <ul>
+                <li><span class="accent-text">Strategic Decisions:</span> Long-term planning based on trend insights</li>
+                <li><span class="accent-text">Tactical Actions:</span> Short-term operational improvements</li>
+                <li><span class="accent-text">Risk Management:</span> Identifying and mitigating potential issues</li>
+                <li><span class="accent-text">Performance Monitoring:</span> Tracking outcomes of implemented changes</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> Amazon uses customer behavior insights to make decisions on warehouse locations, product recommendations, and pricing strategies.
+            </div>
+        </section>
+
+        <!-- Slide 8: Techniques Overview -->
+        <section class="slide">
+            <h2>Techniques of Insight Generation</h2>
+            <div class="highlight-box">
+                Diverse methodologies enable different perspectives and deeper understanding of data
+            </div>
+            <div class="flow-diagram">
+                <div class="flow-step">Qualitative</div>
+                <div class="arrow">+</div>
+                <div class="flow-step">Quantitative</div>
+                <div class="arrow">=</div>
+                <div class="flow-step">Comprehensive</div>
+                <div class="arrow">→</div>
+                <div class="flow-step">Insights</div>
+            </div>
+        </section>
+
+        <!-- Slide 9: Qualitative Analysis Part 1 -->
+        <section class="slide">
+            <h2>Qualitative Analysis</h2>
+            <ul>
+                <li><span class="accent-text">Content Analysis:</span> Systematically coding and categorizing textual data to quantify frequency and context of words and phrases</li>
+                <li><span class="accent-text">Narrative Analysis:</span> Examining stories people tell, understanding motivations and perceptions</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> A hotel analyzes guest reviews to identify recurring complaints (cleanliness, noise, staff), enabling targeted improvements.
+            </div>
+        </section>
+
+        <!-- Slide 10: Qualitative Analysis Part 2 -->
+        <section class="slide">
+            <h2>Qualitative Analysis (Continued)</h2>
+            <ul>
+                <li><span class="accent-text">Grounded Theory:</span> Allowing theories to emerge directly from data rather than starting with preconceived hypotheses. Helps explore new markets and behaviors</li>
+                <li><span class="accent-text">Discourse Analysis:</span> Analyzing how language is used to understand cultural and social factors influencing communication and decision-making</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> Social media analysis examines how brand mention language correlates with customer sentiment and purchasing behavior.
+            </div>
+        </section>
+
+        <!-- Slide 11: Quantitative Analysis Part 1 -->
+        <section class="slide">
+            <h2>Quantitative Analysis</h2>
+            <ul>
+                <li><span class="accent-text">Descriptive Statistics:</span> Summarizing large datasets using mean, median, mode, and standard deviation to provide business performance snapshots</li>
+                <li><span class="accent-text">Inferential Statistics:</span> Using sample data for predictions about larger populations through hypothesis testing and t-tests</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> A retailer uses descriptive stats to identify average customer basket size ($75) and median transaction value ($45) across regions.
+            </div>
+        </section>
+
+        <!-- Slide 12: Quantitative Analysis Part 2 -->
+        <section class="slide">
+            <h2>Quantitative Analysis (Advanced)</h2>
+            <ul>
+                <li><span class="accent-text">Predictive Modeling:</span> Using historical data and statistical models to forecast future trends</li>
+                <li><span class="accent-text">Data Mining:</span> Discovering hidden patterns and correlations for customer segmentation and fraud detection</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> Banks use predictive models to forecast loan default risk by analyzing historical payment patterns and demographic data.
+            </div>
+        </section>
+
+        <!-- Slide 13: Advanced Techniques -->
+        <section class="slide">
+            <h2>Optimization & Machine Learning</h2>
+            <ul>
+                <li><span class="accent-text">Optimization Models:</span> Mathematical programming to determine resource allocation and minimize costs or maximize profits</li>
+                <li><span class="accent-text">Machine Learning:</span> Algorithms that learn patterns from data to make autonomous predictions and decisions</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> Airlines use optimization models to determine flight routes and pricing that maximize revenue while managing capacity and fuel costs.
+            </div>
+        </section>
+
+        <!-- Slide 14: Thematic and Sentiment Analysis -->
+        <section class="slide">
+            <h2>Thematic & Sentiment Analysis</h2>
+            <ul>
+                <li><span class="accent-text">Thematic Analysis:</span> Identifying recurring themes and patterns in qualitative data</li>
+                <li><span class="accent-text">Sentiment Analysis:</span> Extracting emotional tone and opinion from text using NLP</li>
+                <li><span class="accent-text">Topic Modeling:</span> Discovering abstract topics across document collections</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> A tech company analyzes customer support tickets to identify top complaint themes (performance, documentation, pricing) and sentiment to prioritize fixes.
+            </div>
+        </section>
+
+        <!-- Slide 15: Predictive and Prescriptive Analysis -->
+        <section class="slide">
+            <h2>Predictive & Prescriptive Analysis</h2>
+            <ul>
+                <li><span class="accent-text">Predictive:</span> "What will happen?" - Forecasting future trends and outcomes</li>
+                <li><span class="accent-text">Prescriptive:</span> "What should we do?" - Recommending optimal actions based on predictions</li>
+                <li><span class="accent-text">Simulation:</span> Testing scenarios before implementation</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> Healthcare providers predict patient readmission risk (predictive), then recommend personalized discharge plans and follow-up schedules (prescriptive).
+            </div>
+        </section>
+
+        <!-- Slide 16: Data Visualization -->
+        <section class="slide">
+            <h2>Data Visualization Best Practices</h2>
+            <ul>
+                <li><span class="accent-text">Choose Appropriate Charts:</span> Bar charts for comparison, line charts for trends, scatter plots for correlation</li>
+                <li><span class="accent-text">Color Psychology:</span> Use color to highlight, not distract</li>
+                <li><span class="accent-text">Clear Labeling:</span> Obvious titles, axes labels, and legends</li>
+                <li><span class="accent-text">Interactive Elements:</span> Drill-down capability for exploration</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> Tableau enables organizations to create interactive dashboards that reveal insights through filters and drill-through actions.
+            </div>
+        </section>
+
+        <!-- Slide 17: Triangulation -->
+        <section class="slide">
+            <h2>Triangulation: Validating Insights</h2>
+            <ul>
+                <li><span class="accent-text">Data Triangulation:</span> Using data from different sources, times, and groups to ensure findings are generalizable</li>
+                <li><span class="accent-text">Methodological Triangulation:</span> Combining quantitative, qualitative, and thematic methods</li>
+            </ul>
+            <div class="highlight-box">
+                Triangulation removes bias and strengthens confidence in insights
+            </div>
+            <div class="example-box">
+                <strong>Example:</strong> A company validates a new customer segment by combining survey data, transaction analysis, and social media behavior.
+            </div>
+        </section>
+
+        <!-- Slide 18: Triangulation Continued -->
+        <section class="slide">
+            <h2>Triangulation (Advanced)</h2>
+            <ul>
+                <li><span class="accent-text">Investigator Triangulation:</span> Using different analysts to independently collect or interpret data, reducing individual bias</li>
+                <li><span class="accent-text">Theory Triangulation:</span> Applying various theoretical perspectives to interpret the same data for comprehensive understanding</li>
+            </ul>
+            <div class="example-box">
+                <strong>Example:</strong> Market research combines analyst perspectives (economist, behaviorist, technologist) to interpret market trends from multiple angles.
+            </div>
+        </section>
+
+        <!-- Slide 19: Industry Applications -->
+        <section class="slide">
+            <h2>Industry Applications</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Industry</th>
+                            <th>Application</th>
+                            <th>Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Retail</td>
+                            <td>Purchase history analysis & regional trends</td>
+                            <td>Smarter inventory, higher satisfaction</td>
+                        </tr>
+                        <tr>
+                            <td>Finance</td>
+                            <td>Transaction anomaly detection</td>
+                            <td>Faster fraud detection, reduced losses</td>
+                        </tr>
+                        <tr>
+                            <td>Healthcare</td>
+                            <td>Readmission risk prediction</td>
+                            <td>Better outcomes, reduced costs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Slide 20: Industry Applications Continued -->
+        <section class="slide">
+            <h2>Industry Applications (Continued)</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Industry</th>
+                            <th>Application</th>
+                            <th>Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hospitality</td>
+                            <td>Guest feedback analysis for service gaps</td>
+                            <td>Enhanced satisfaction, targeted improvements</td>
+                        </tr>
+                        <tr>
+                            <td>Education</td>
+                            <td>Enrollment & course trend optimization</td>
+                            <td>Better forecasting, improved experience</td>
+                        </tr>
+                        <tr>
+                            <td>Manufacturing</td>
+                            <td>Predictive maintenance on equipment</td>
+                            <td>Reduced downtime, lower costs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Slide 21: Key Takeaways -->
+        <section class="slide">
+            <h2>Key Takeaways</h2>
+            <ul>
+                <li><span class="accent-text">Holistic Approach:</span> Combine qualitative and quantitative methods for comprehensive insights</li>
+                <li><span class="accent-text">Data Quality Matters:</span> Clean, well-integrated data is the foundation of reliable insights</li>
+                <li><span class="accent-text">Visualization Communicates:</span> Effective presentation makes insights actionable</li>
+                <li><span class="accent-text">Validation Builds Confidence:</span> Triangulation strengthens insight credibility</li>
+                <li><span class="accent-text">Action is Key:</span> Insights only create value when transformed into decisions and actions</li>
+            </ul>
+        </section>
+
+        <!-- Slide 22: Thank You -->
+        <section class="slide title-slide">
+            <h1>Thank You!</h1>
+            <p class="subtitle">Questions & Discussion</p>
+            <p class="author">Transform Data Into Intelligence</p>
+        </section>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" aria-label="Previous slide">←</button>
+        <button class="nav-btn" id="nextBtn" aria-label="Next slide">→</button>
+    </div>
+    <div class="slide-counter"><span id="slideCount">1</span> / <span id="totalSlides">22</span></div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // Initialize
+        document.getElementById('totalSlides').textContent = totalSlides;
+        updateSlideDisplay();
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                themeToggle.textContent = '☀️';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                themeToggle.textContent = '🌙';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            body.classList.remove('dark-mode');
+            body.classList.add('light-mode');
+            themeToggle.textContent = '☀️';
+        }
+
+        // Navigation
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlideDisplay();
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlideDisplay();
+            }
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                document.getElementById('nextBtn').click();
+            } else if (e.key === 'ArrowLeft') {
+                document.getElementById('prevBtn').click();
+            }
+        });
+
+        function updateSlideDisplay() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+            });
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('slideCount').textContent = currentSlide + 1;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LBEF Business Information System Slides</title>
+  <style>
+    /* Design System Variables */
+    :root {
+      --color-white: rgba(255, 255, 255, 1);
+      --color-black: rgba(0, 0, 0, 1);
+      --color-cream-50: rgba(252, 252, 249, 1);
+      --color-cream-100: rgba(255, 255, 253, 1);
+      --color-gray-200: rgba(245, 245, 245, 1);
+      --color-gray-300: rgba(167, 169, 169, 1);
+      --color-gray-400: rgba(119, 124, 124, 1);
+      --color-slate-500: rgba(98, 108, 113, 1);
+      --color-brown-600: rgba(94, 82, 64, 1);
+      --color-charcoal-700: rgba(31, 33, 33, 1);
+      --color-charcoal-800: rgba(38, 40, 40, 1);
+      --color-slate-900: rgba(19, 52, 59, 1);
+      --color-teal-300: rgba(50, 184, 198, 1);
+      --color-teal-400: rgba(45, 166, 178, 1);
+      --color-teal-500: rgba(33, 128, 141, 1);
+      --color-teal-600: rgba(29, 116, 128, 1);
+      --color-teal-700: rgba(26, 104, 115, 1);
+      --color-brown-600-rgb: 94, 82, 64;
+      --color-teal-500-rgb: 33, 128, 141;
+      --color-slate-900-rgb: 19, 52, 59;
+      --color-slate-500-rgb: 98, 108, 113;
+      --color-background: var(--color-cream-50);
+      --color-surface: var(--color-cream-100);
+      --color-text: var(--color-slate-900);
+      --color-text-secondary: var(--color-slate-500);
+      --color-primary: var(--color-teal-500);
+      --color-primary-hover: var(--color-teal-600);
+      --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+      --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-size-base: 14px;
+      --font-size-lg: 16px;
+      --font-size-xl: 18px;
+      --font-size-2xl: 20px;
+      --font-size-3xl: 24px;
+      --font-size-4xl: 30px;
+      --font-weight-normal: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 550;
+      --line-height-tight: 1.2;
+      --line-height-normal: 1.5;
+      --space-8: 8px;
+      --space-12: 12px;
+      --space-16: 16px;
+      --space-20: 20px;
+      --space-24: 24px;
+      --space-32: 32px;
+      --space-48: 48px;
+      --radius-base: 8px;
+      --radius-lg: 12px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+      --duration-normal: 250ms;
+      --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @font-face {
+      font-family: 'FKGroteskNeue';
+      src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2') format('woff2');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family-base);
+      font-size: var(--font-size-base);
+      line-height: var(--line-height-normal);
+      color: var(--color-text);
+      background-color: var(--color-background);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-32) var(--space-16);
+    }
+
+    /* Header Styles */
+    .header {
+      text-align: center;
+      margin-bottom: var(--space-48);
+    }
+
+    .header h1 {
+      font-size: var(--font-size-4xl);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-12);
+      line-height: var(--line-height-tight);
+    }
+
+    .header p {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Folder Grid */
+    .folder-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-24);
+      margin-top: var(--space-32);
+    }
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Folder Card */
+    .folder-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-card-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-32);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: all var(--duration-normal) var(--ease-standard);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .folder-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary);
+    }
+
+    .folder-icon {
+      font-size: 48px;
+      margin-bottom: var(--space-16);
+      display: block;
+    }
+
+    .folder-name {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-12);
+    }
+
+    .folder-description {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .footer {
+      margin-top: var(--space-48);
+      padding: var(--space-24) 0;
+      border-top: 1px solid var(--color-card-border);
+      text-align: center;
+    }
+
+    .disclaimer {
+      font-size: 6px;
+      color: var(--color-text-secondary);
+      margin-top: var(--space-12);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: var(--font-size-3xl);
+      }
+
+      .folder-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header class="header">
+      <h1>LBEF Business Intelligence System Slides</h1>
+      <p>This page will have the slides from each session and link to other folders</p>
+    </header>
+
+    <div class="folder-grid">
+      <div class="folder-card">
+        <a href="Session 1 - BIS Introduction Slides/index.html">
+          <div class="folder-icon">📊</div>
+          <h3 class="folder-name">Session 1 - Introduction to Business Intelligence System</h3>
+        </a>
+        <p class="folder-description">The session covered the basics of business intelligence system with concepts such as science, computing, IT core capabilities, big data and its characterstics, history of business intelligence and capabilities of Business Intelligence System.</p>
+      </div>
+
+      <div class="folder-card">
+        <a href="Session 2 - BI Tools Slides/index.html">
+          <div class="folder-icon">📊</div>
+          <h3 class="folder-name">Session 2 - BI Tools</h3>
+        </a>
+        <p class="folder-description">The slides covers the pros and cons of different BI solutions, evaluate the available BI alternatives in the market, understand modern BI trends and emerging technologies and assessing information challenges and best practices.</p>
+      </div>
+
+      <div class="folder-card">
+        <a href="Session 3 - Organization Memory/index.html">
+          <div class="folder-icon">📊</div>
+          <h3 class="folder-name">Session 3 - Organization Memory</h3>
+        </a>
+        <p class="folder-description">The slides covers the concepts of Organization Memory, need of BI, BIS Capabilities, Types of Data, Stages of Organization Memory, AI Powered-Organization Memory, Metadata and Data Lineage Management, Data Governance Framework, Knowledge Management Integration, Cloud-Based Systems, Challenges and Best Practices, and Future Trends of BIS.</p>
+      </div>
+      <div class="folder-card">
+        <a href="Session 4 - Text and Web Mining.html">
+          <div class="folder-icon">📊</div>
+          <h3 class="folder-name">Session 4 - Text and Web Mining</h3>
+        </a>
+        <p class="folder-description">The slides covers the concepts of Organization Memory, need of BI, BIS Capabilities, Types of Data, Stages of Organization Memory, AI Powered-Organization Memory, Metadata and Data Lineage Management, Data Governance Framework, Knowledge Management Integration, Cloud-Based Systems, Challenges and Best Practices, and Future Trends of BIS.</p>
+      </div>
+       <div class="folder-card">
+        <a href="https://www.scitepress.org/papers/2016/60495/60495.pdf" target="_blank">
+          <div class="folder-icon">📄</div>
+          <h3 class="folder-name">Session 5 - AGGORA Case Discussion</h3>
+        </a>
+        <p class="folder-description">The idea of this case study is to understand how Business Intelligence Systems are adopted in companies and how it can be better promoted.</p>
+      </div>
+      <div class="folder-card">
+        <a href="Session 6 - Data Integration and ETL.html">
+          <div class="folder-icon">📊</div>
+          <h3 class="folder-name">Session 6 - Data Integration and ETL</h3>
+        </a>
+        <p class="folder-description">The slides covers the concepts of Data Integration and how they are performed, ETL and ELT Process and two videos to illustrate these ideas</p>
+      </div>
+      <div class="folder-card">
+        <a href="Session 7 - Insight Creation.html">
+          <div class="folder-icon">📊</div>
+          <h3 class="folder-name">Session 7 - Insight Creation</h3>
+        </a>
+        <p class="folder-description">The slides covers the concepts of insight creation and how data are converted into valuable insights for businesses to use for their growth. It talks about the process of insight creation and what tools are used to perform it.</p>
+      </div>
+    </div>
+
+    </div>
+    <footer class="footer">
+      <p>Contact Information: <a href="mailto:sukrit.pant@lbef.edu.np">sukrit.pant@lbef.edu.np</a></p>
+      <p>This website is maintained by Sukrit Pant and if you have any issue with the content, please contact me via the contact information above.</p>
+      <p class="disclaimer">Disclaimer: Perplexity AI has been used to create this basic website.</p>
+    </footer>
+  </div>
+
+</body>
+</html>
