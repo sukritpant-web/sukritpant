@@ -31,9 +31,18 @@ async function loadBlogGrid() {
     const grid = document.getElementById('blog-grid');
     if (!grid) return;
 
+    const postsUrl = 'data/posts.json';
+    console.log(`[Blog] Attempting to fetch posts from: ${postsUrl}`);
+
     try {
-        const response = await fetch('data/posts.json');
+        const response = await fetch(postsUrl);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status} while fetching ${postsUrl}`);
+        }
+
         const posts = await response.json();
+        console.log(`[Blog] Successfully loaded ${posts.length} posts.`);
 
         grid.innerHTML = posts.map(post => `
       <article class="card blog-card">
@@ -44,8 +53,14 @@ async function loadBlogGrid() {
       </article>
     `).join('');
     } catch (error) {
-        console.error('Error loading blog posts:', error);
-        grid.innerHTML = '<p>Error loading blog posts. Please check back later.</p>';
+        console.error('[Blog] Error loading blog posts:', error);
+        grid.innerHTML = `
+            <div class="error-message">
+                <p>Error loading blog posts. Please check back later.</p>
+                <small style="display: block; margin-top: 10px; color: #666;">
+                    Diagnostic Info: ${error.message}
+                </small>
+            </div>`;
     }
 }
 
@@ -65,7 +80,14 @@ async function loadBlogPost() {
 
     try {
         // Load metadata
-        const metaResponse = await fetch('data/posts.json');
+        const metaUrl = 'data/posts.json';
+        console.log(`[Post] Attempting to fetch metadata from: ${metaUrl}`);
+        const metaResponse = await fetch(metaUrl);
+
+        if (!metaResponse.ok) {
+            throw new Error(`HTTP error! status: ${metaResponse.status} while fetching metadata ${metaUrl}`);
+        }
+
         const posts = await metaResponse.json();
         const postMeta = posts.find(p => p.slug === slug);
 
@@ -73,18 +95,31 @@ async function loadBlogPost() {
             titleElem.textContent = postMeta.title;
             dateElem.textContent = new Date(postMeta.date).toLocaleDateString();
             document.title = `${postMeta.title} | Sukrit Pant`;
+        } else {
+            console.warn(`[Post] No metadata found for slug: ${slug}`);
         }
 
         // Load content
-        const contentResponse = await fetch(`posts/${slug}.md`);
-        const markdown = await contentResponse.text();
+        const contentUrl = `posts/${slug}.md`;
+        console.log(`[Post] Attempting to fetch content from: ${contentUrl}`);
+        const contentResponse = await fetch(contentUrl);
 
-        // Simple markdown-ish to HTML conversion
-        // (In a real app, use a library like 'marked', but for simplicity here I'll do some basic replacements)
+        if (!contentResponse.ok) {
+            throw new Error(`HTTP error! status: ${contentResponse.status} while fetching content ${contentUrl}`);
+        }
+
+        const markdown = await contentResponse.text();
         container.innerHTML = parseMarkdown(markdown);
+        console.log(`[Post] Successfully loaded post content for: ${slug}`);
     } catch (error) {
-        console.error('Error loading post content:', error);
-        container.innerHTML = '<p>Error loading blog post. Please check back later.</p>';
+        console.error('[Post] Error loading post content:', error);
+        container.innerHTML = `
+            <div class="error-message">
+                <p>Error loading blog post. Please check back later.</p>
+                <small style="display: block; margin-top: 10px; color: #666;">
+                    Diagnostic Info: ${error.message}
+                </small>
+            </div>`;
     }
 }
 
