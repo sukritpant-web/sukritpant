@@ -136,8 +136,32 @@ function parseMarkdown(text) {
         .split('\n').map(line => line.trim() ? `<p>${line}</p>` : '').join('');
 }
 
+// Hamburger Menu Logic
+function initHamburger() {
+    const hamburger = document.getElementById('hamburger-btn');
+    const navLinks = document.getElementById('nav-links');
+    const links = document.querySelectorAll('.nav-links a');
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            navLinks.classList.toggle('open');
+            document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : 'auto';
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                navLinks.classList.remove('open');
+                document.body.style.overflow = 'auto';
+            });
+        });
+    }
+}
+
 // Global initialization
 document.addEventListener('DOMContentLoaded', () => {
     loadBlogGrid();
     loadBlogPost();
+    initHamburger();
 });
