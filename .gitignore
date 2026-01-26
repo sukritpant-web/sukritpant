@@ -8,3 +8,6 @@ CV_SukritPant_01_26_Master.docx
 
 #deploy script
 deploy.sh
+
+#Hidden
+.DS_Store
